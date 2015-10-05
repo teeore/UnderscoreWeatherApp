@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Weather API</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/libs/jquery-2.1.4.js"></script>
+    <script src="js/libs/underscore.js"></script>
+    <script src="js/main.js"></script>
+</head>
+
+<body>
+    <div id="main-content">
+        <form name="getData" id="getData" method="post">
+            <div>
+                <label>City/Zip</label>
+                <input id="searchTerm" type="text" required />
+                <br>
+                <select id="forecast">
+                    <option value="1">Today</option>
+                    <option value="5">5 Day</option>
+                    <option value="7">7 Day</option>
+                </select>
+                <br />
+                <button type="submit">Search</button>
+            </div>
+        </form>
+        <hr />
+        <div class="wrapper"></div>
+    </div>
+    <script type="text/template" id="single-template">
+        <div id="weather-list">
+            <div class="result-wrapper">
+                <div class="result-icon">
+                    <img src="http://openweathermap.org/img/w/<%= weatherItems.weather[0].icon %>.png">
+                </div>
+                <div class="result">
+                    <div class="name">
+                        <%= weatherItems.name %>
+                    </div>
+                    <div class="result-descr">
+                        <%= weatherItems.weather[0].description %>
+                    </div>
+                    <div class="coords">Lat:
+                        <%= weatherItems.coord.lat %> Long:
+                            <%= weatherItems.coord.lon %>
+                    </div>
+                    <div class="temp">
+                        <%= weatherItems.main.temp %>&#8457;</div>
+                    <div class="temp-range">temperature from
+                        <%= weatherItems.main.temp_min %> to
+                            <%= weatherItems.main.temp_max %>&#8457;, wind
+                                <%= weatherItems.wind.speed %>m/s. clouds
+                                    <%= weatherItems.clouds.all%>%</div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="multiple-template">
+        <div id="weather-multiple-list">
+            <%_.each(weatherItems, function(data, i, item) {%>
+                <div id="multiple-list">
+                    <div class="multiple-icon">
+                        <img src="http://openweathermap.org/img/w/<%= item.list[0].weather[0].icon %>.png">
+                        <div class="temp-wrapper">
+                            <div class="high-temp">High:
+                                <%= item.list[0].main.temp_max %>
+                            </div>
+                            <div class="low-temp">Low:
+                                <%= item.list[0].main.temp_min  %>
+                            </div>
+                            <div class="humidity">
+                                <%= item.list[0].weather[0].main %>:
+                                    <%= item.list[0].main.humidity %>%</div>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+        </div>
+    </script>
+</body>
+
+</html>
